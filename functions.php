@@ -36,3 +36,8 @@
 	    $html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
 	    return $html;
 	}
+
+	/*
+	Thumbnail support
+	 */
+	add_theme_support('post-thumbnails');
