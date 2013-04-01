@@ -15,28 +15,15 @@ var App = (function($) {
 	
 	function filterProjects () {
 
-		var checkboxes = document.getElementById('filter').elements;
-		
-		// Add eventlistener
-		[].forEach.call(checkboxes, function (el) {
-			
-			el.addEventListener('change', filterCategories);
-
+		// Boot isotope
+		$('#project-container').isotope({
+			itemSelector: 'article',
+			layoutMode: 'fitRows'/*,
+			cellsByRow: {
+				columnWidth: 322,
+				rowHeight: 360
+			}*/
 		});
-
-		function filterCategories () {
-			[].forEach.call(checkboxes, function (el) {
-				if (el.checked) {
-					[].forEach.call(document.querySelectorAll('article'+el.value), function (project) {
-						project.style.display="block";
-					});
-				} else {
-					[].forEach.call(document.querySelectorAll('article'+el.value), function (project) {
-						project.style.display="none";
-					});
-				}
-			});
-		}
 
 	}
 
