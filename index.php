@@ -24,97 +24,135 @@
 
     ?></title>
 
-	<link rel="stylesheet" href="<?php bloginfo('template_directory');?>/stylesheets/normalize.css" />
-	<link rel="stylesheet" href="<?php bloginfo('template_directory');?>/stylesheets/foundation.css" />
 	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen,projection" />
-	
+
 	<script src="<?php bloginfo('template_directory');?>/javascripts/vendor/custom.modernizr.js"></script>
 
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class();?>>
 
-	<div class="row">
+	<header class="row">
 		<div class="large-12 columns">
-			<h2>Welcome to Foundation</h2>
-			<p>This is version 4.0.9.</p>
-			<hr />
+			<div class="logo">
+				<a href="<?php bloginfo('url');?>">
+					<img src="<?php bloginfo('template_directory');?>/images/logo.png" alt="K is for Kristoffer Berglund" title="K is for Kristoffer Berglund">
+				</a>
+			</div>
 		</div>
-	</div>
+	</header>
 
-	<div class="row">
-		<div class="large-8 columns">
-			<h3>The Grid</h3>
-
-			<!-- Grid Example -->
-			<div class="row">
-				<div class="large-12 columns">
-					<div class="panel">
-						<p>This is a twelve column section in a row. Each of these includes a div.panel element so you can see where the columns are - it's not required at all for the grid.</p>
-					</div>
-				</div>
+	<section class="slider">
+		<div class="row">
+			<div class="large-6 large-offset-3 columns">
+				<ul data-orbit>
+					<li>
+						<img src="http://lorempixum.com/470/300" />
+						<div class="orbit-caption">...</div>
+					</li>
+				</ul>
 			</div>
-			<div class="row">
-				<div class="large-6 columns">
-					<div class="panel">
-						<p>Six columns</p>
-					</div>
-				</div>
-				<div class="large-6 columns">
-					<div class="panel">
-						<p>Six columns</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="large-4 columns">
-					<div class="panel">
-						<p>Four columns</p>
-					</div>
-				</div>
-				<div class="large-4 columns">
-					<div class="panel">
-						<p>Four columns</p>
-					</div>
-				</div>
-				<div class="large-4 columns">
-					<div class="panel">
-						<p>Four columns</p>
-					</div>
-				</div>
-			</div>
-
-			<h3>Buttons</h3>
-
-      <div class="row">
-        <div class="large-6 columns">
-          <p><a href="#" class="small button">Small Button</a></p>
-          <p><a href="#" class="button">Medium Button</a></p>
-          <p><a href="#" class="large button">Large Button</a></p>
-        </div>
-        <div class="large-6 columns">
-          <p><a href="#" class="small alert button">Small Alert Button</a></p>
-          <p><a href="#" class="success button">Medium Success Button</a></p>
-          <p><a href="#" class="large secondary button">Large Secondary Button</a></p>
-        </div>
-      </div>
 		</div>
+	</section>
 
+	<section class="content">
+		<div class="row content-filter">
+			<div class="large-12 columns">
+				<span>FILMS // </span>
+				<form id="filter">
+				
+				<?php 
+					$categories = get_categories();
+
+					foreach ($categories as $category) {
+						$html .= '<label for="category-'.$category->slug.'">'.$category->name.'</label><input type="checkbox" checked="checked" id="category-'.$category->slug.'" name="category-'.$category->slug.'" value=".category-'.$category->slug.'">';						
+					}
+					echo $html;
+				?>
+					<label for="category-live">Live</label><input type="checkbox" checked="checked" id="category-live" name="category-live" value=".category-live">
+				</form>
+			</div> <!-- eo columns -->
+		</div> <!-- eo content-filter -->
+		<?php
+			$i = 0;
+			query_posts(array('post_type' => 'projects'));
+			if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+
+				<?php if ($i == 0) echo '<div class="row">'; ?>
+				<article id="<?php the_ID();?>" <?php post_class('large-4 columns');?>>
+					<figure>
+						<?php the_post_thumbnail('thumbnail'); ?>
+					</figure>
+					<h2><?php the_title(); ?></h2>
+					<?php wpautop(the_field('description')); ?>
+				</article>
+				<?php
+					if ($i == 2) {
+						echo '</div>';
+						$i = 0;
+					} else {
+						$i++;
+					}
+				?>
+			
+			<?php 
+			endwhile; endif;
+			if ($i < 2) echo '</div>';
+			wp_reset_query();
+		?>
+		<div class="row">
+			<article id="6" class="post-6 projects type-projects status-publish hentry category-commercials large-4 columns">
+				<figure>
+					<img src="http://localhost:8888/k/wp-content/uploads/2013/03/closer-297x165.jpg" class="attachment-thumbnail wp-post-image" alt="Closer">					</figure>
+				<h2>Closer</h2>
+				A TVC for Rally Sweden 2013
+			</article>
+			<article id="6" class="post-6 projects type-projects status-publish hentry category-live large-4 columns">
+				<figure>
+					<img src="http://localhost:8888/k/wp-content/uploads/2013/03/closer-297x165.jpg" class="attachment-thumbnail wp-post-image" alt="Closer">					</figure>
+				<h2>Closer</h2>
+				A TVC for Rally Sweden 2013
+			</article>
+			<article id="6" class="post-6 projects type-projects status-publish hentry category-commercials large-4 columns">
+				<figure>
+					<img src="http://localhost:8888/k/wp-content/uploads/2013/03/closer-297x165.jpg" class="attachment-thumbnail wp-post-image" alt="Closer">					</figure>
+				<h2>Closer</h2>
+				A TVC for Rally Sweden 2013
+			</article>
+		</div>
+	</section>
+
+	<footer class="row">
+		
 		<div class="large-4 columns">
-			<h4>Getting Started</h4>
-			<p>We're stoked you want to try Foundation! To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.</p>
-
-			<h4>Other Resources</h4>
-			<p>Once you've exhausted the fun in this document, you should check out:</p>
-			<ul class="disc">
-				<li><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</li>
-				<li><a href="http://github.com/zurb/foundation">Foundation on Github</a><br />Latest code, issue reports, feature requests and more.</li>
-				<li><a href="http://twitter.com/foundationzurb">@foundationzurb</a><br />Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).</li>
-			</ul>
+			<?php 
+				query_posts('page_id=12');
+					if ( have_posts() ) : while ( have_posts() ) : the_post();
+						the_title();
+						the_content();
+					endwhile; endif;
+				wp_reset_query();
+			?>
 		</div>
-	</div>
-
+		
+		<div class="large-4 columns">
+			<p>Tweets</p>
+			<ul id="tweets"></ul>
+		</div>
+		
+		<div class="large-4 columns">
+			<?php 
+				query_posts('page_id=16');
+					if ( have_posts() ) : while ( have_posts() ) : the_post();
+						the_title();
+						the_content();
+					endwhile; endif;
+				wp_reset_query();
+			?>
+		</div>
+	
+	</footer>
     
-  <?php wp_footer(); ?>
+	<?php wp_footer(); ?>
 </body>
 </html>
