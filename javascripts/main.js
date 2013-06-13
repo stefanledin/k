@@ -15,15 +15,30 @@ var App = (function($) {
 	
 	function filterProjects () {
 
-		// Boot isotope
-		$('#project-container').isotope({
-			itemSelector: 'article',
-			layoutMode: 'fitRows'/*,
-			cellsByRow: {
-				columnWidth: 322,
-				rowHeight: 360
-			}*/
+		var checkboxes = document.getElementById('filter').elements;
+		
+		// Add eventlistener
+		[].forEach.call(checkboxes, function (el) {
+			
+			el.addEventListener('change', filterCategories);
+
 		});
+
+		function filterCategories () {
+			[].forEach.call(checkboxes, function (el) {
+				if (el.checked) {
+					hideShow(document.querySelectorAll('article'+el.value), 'block');
+				} else {
+					hideShow(document.querySelectorAll('article'+el.value), 'none');
+				}
+			});
+		}
+
+		function hideShow (elements, displayValue) {
+			[].forEach.call(elements, function (project) {
+				project.style.display = displayValue;
+			});
+		}
 
 	}
 

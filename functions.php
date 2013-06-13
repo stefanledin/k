@@ -6,6 +6,7 @@
 	function includeScripts() {
 		wp_enqueue_script('jquery');	
 		wp_enqueue_script('foundation', get_template_directory_uri() . '/javascripts/foundation.min.js', null, null, true);	
+		wp_enqueue_script('plugins', get_template_directory_uri() . '/javascripts/plugins.js', null, null, true);	
 		wp_enqueue_script('main', get_template_directory_uri() . '/javascripts/main.js', 'jquery', null, true);	
 	}
 	

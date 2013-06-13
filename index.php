@@ -1,55 +1,24 @@
-<!DOCTYPE html>
-<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width" />
-	
-	<title><?php
-    /*
-     * Print the <title> tag based on what is being viewed.
-     */
-    global $page, $paged;
-
-    wp_title( '|', true, 'right' );
-
-    // Add the blog name.
-    bloginfo( 'name' );
-
-    // Add the blog description for the home/front page.
-    $site_description = get_bloginfo( 'description', 'display' );
-    if ( $site_description && ( is_home() || is_front_page() ) )
-        echo " | $site_description";
-
-    ?></title>
-
-	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen,projection" />
-
-	<script src="<?php bloginfo('template_directory');?>/javascripts/vendor/custom.modernizr.js"></script>
-
-	<?php wp_head(); ?>
-</head>
-<body <?php body_class();?>>
-
-	<header class="row">
-		<div class="large-12 columns">
-			<div class="logo">
-				<a href="<?php bloginfo('url');?>">
-					<img src="<?php bloginfo('template_directory');?>/images/logo.png" alt="K is for Kristoffer Berglund" title="K is for Kristoffer Berglund">
-				</a>
-			</div>
-		</div>
-	</header>
+<?php get_header(); ?>
 
 	<section class="slider">
 		<div class="row">
-			<div class="large-6 large-offset-3 columns">
-				<ul data-orbit>
-					<li>
-						<img src="http://lorempixum.com/470/300" />
-						<div class="orbit-caption">...</div>
-					</li>
+			<div class="large-12 columns">
+				<ul data-orbit data-options="bullets: false">	
+					<?php 
+						query_posts(array('post_type' => 'slider'));
+						if ( have_posts() ) : while ( have_posts() ) : the_post();
+					?>
+						<li style="background: url(<?php the_field('background');?>) no-repeat center">
+							<div class="row">
+								<div class="small-12 columns">
+									<?php the_content();?>
+								</div>
+							</div>
+						</li>
+					<?php 
+						endwhile; endif;
+						wp_reset_query();
+					?>
 				</ul>
 			</div>
 		</div>
@@ -75,16 +44,18 @@
 		</div> <!-- eo content-filter -->
 		<?php
 			$i = 0;
-			query_posts(array('post_type' => 'projects'));
+			query_posts(array('post_type' => 'projects', 'posts_per_page' => -1));
 			if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
-				<?php if ($i == 0) echo '<div class="row">'; ?>
-				<article id="<?php the_ID();?>" <?php post_class('large-4 columns');?>>
-					<figure>
-						<?php the_post_thumbnail('thumbnail'); ?>
-					</figure>
-					<h2><?php the_title(); ?></h2>
-					<?php wpautop(the_field('description')); ?>
+				<?php if ($i == 0) echo '<div class="row projects">'; ?>
+				<article id="<?php the_ID();?>" <?php post_class('large-4 small-6 columns end');?>>
+					<a href="<?php the_permalink();?>">
+						<figure>
+							<?php the_post_thumbnail('thumbnail'); ?>
+						</figure>
+						<h2><?php the_title(); ?></h2>
+						<p class="description"><?php the_field('description'); ?></p>
+					</a>
 				</article>
 				<?php
 					if ($i == 2) {
@@ -100,26 +71,6 @@
 			if ($i < 2) echo '</div>';
 			wp_reset_query();
 		?>
-		<div class="row">
-			<article id="6" class="post-6 projects type-projects status-publish hentry category-commercials large-4 columns">
-				<figure>
-					<img src="http://localhost:8888/k/wp-content/uploads/2013/03/closer-297x165.jpg" class="attachment-thumbnail wp-post-image" alt="Closer">					</figure>
-				<h2>Closer</h2>
-				A TVC for Rally Sweden 2013
-			</article>
-			<article id="6" class="post-6 projects type-projects status-publish hentry category-live large-4 columns">
-				<figure>
-					<img src="http://localhost:8888/k/wp-content/uploads/2013/03/closer-297x165.jpg" class="attachment-thumbnail wp-post-image" alt="Closer">					</figure>
-				<h2>Closer</h2>
-				A TVC for Rally Sweden 2013
-			</article>
-			<article id="6" class="post-6 projects type-projects status-publish hentry category-commercials large-4 columns">
-				<figure>
-					<img src="http://localhost:8888/k/wp-content/uploads/2013/03/closer-297x165.jpg" class="attachment-thumbnail wp-post-image" alt="Closer">					</figure>
-				<h2>Closer</h2>
-				A TVC for Rally Sweden 2013
-			</article>
-		</div>
 	</section>
 
 	<footer class="row">
@@ -136,7 +87,7 @@
 		</div>
 		
 		<div class="large-4 columns">
-			<p>Tweets</p>
+			<p>THIS JUST IN</p>
 			<ul id="tweets"></ul>
 		</div>
 		
@@ -153,6 +104,4 @@
 	
 	</footer>
     
-	<?php wp_footer(); ?>
-</body>
-</html>
+<?php get_footer(); ?>

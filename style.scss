@@ -1,0 +1,107 @@
+/*! 
+Theme Name: K
+Theme URI: http://www.kristofferberglund.se
+Description: K-theme
+Version: 1.0
+Author: Stefan Ledin
+Author URI: http://www.stefanledin.se
+*/
+@import "stylesheets/normalize";
+@import "stylesheets/foundation";
+
+/* ==========================================================================
+   Globals
+   ========================================================================== */
+h1 {
+   text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Basic layout
+   ========================================================================== */
+body {
+   padding-bottom: 50px;
+}
+
+/* ==========================================================================
+   Header / slider
+   ========================================================================== */
+.logo {
+   margin: 115px auto 81px auto;
+   width: 120px;
+
+   @media (max-width: 767px) {
+      margin: 20px auto;
+   }
+}
+
+.slider {
+   margin: 0 0 50px 0;
+   background: #000;
+
+   ul {
+      height: 420px;
+   }
+   p {
+      margin-top: 130px;
+      font-family: "Georgia", serif;
+      font-size: 36px;
+      color: #fff;
+   }
+}
+.orbit-next,
+.orbit-prev,
+.orbit-timer,
+.orbit-slide-number {
+   display: none;
+}
+
+/* ==========================================================================
+   Content
+   ========================================================================== */
+
+/*
+Home
+ */
+.content-filter span,
+#filter label {
+   float: left;
+}
+
+.content {
+   margin: 0 0 80px 0;
+}
+
+.projects {
+   h2 {
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+   }
+   .description {
+      font-size: 12px;
+      text-align: center;
+   }
+}
+
+/*
+Single
+ */
+dt {
+   margin: 0 10px 0 0;
+   float: left;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+#tweets {
+
+   li {
+      list-style: none;
+   }
+}
+
+/* ==========================================================================
+   Mediaqueries
+   ========================================================================== */
